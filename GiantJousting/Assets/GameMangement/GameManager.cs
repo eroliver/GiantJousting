@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +10,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         MakeSingleton();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     void MakeSingleton()
@@ -29,9 +25,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public event Action onNextSceneEnter;
+    public void NextSceneEnter()
     {
-        
+        if (onNextSceneEnter != null)
+        {
+            onNextSceneEnter();
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            NextSceneEnter();
+        }
     }
 }
